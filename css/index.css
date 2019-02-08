@@ -1,5 +1,5 @@
 body {
-  background-color: lightgrey;
+  background-color: white;
 }
 .not_connected {
   color: red;
@@ -40,4 +40,43 @@ body {
 }
 #test_connection_status {
   padding: 10px;
+}
+#left-right {
+  display: flex;
+}
+#left-right div {
+  margin: 12.5px 30px 12.5px 30px;
+}
+#forward {
+  background-color: yellow;
+}
+#left {
+  background-color: royalblue;
+}
+#right {
+  background-color: red;
+}
+#back {
+  background-color: lightgreen;
+}
+.dpad_control {
+  display: flex;
+  justify-content: center;
+  border-radius: 100%;
+  transition: background-color 0.1s;
+}
+#dpad {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  width: 240px;
+}
+#dpad svg {
+  width: 50px;
+  height: 50px;
+}
+.clicked {
+  background-color: grey!important;
 }
