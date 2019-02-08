@@ -1,0 +1,11 @@
+.page{
+    display: none;
+    position: fixed;
+    width: 100vw;
+}
+.page.displayPage{
+    display: inherit;
+}
+.pageDiv{
+    overflow: hidden;
+}
