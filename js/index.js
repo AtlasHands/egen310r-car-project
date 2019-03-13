@@ -1,21 +1,46 @@
+if(navigator.getGamepads() == undefined){
+    console.log("Browser not supported");
+}
+var defaultIP = "127.0.0.1";
+var ip;
 var log = console.log
 var page_manager = new PageManager(500,$("#pages"))
 let controller = new ds4_controller_adapter();
-var ip = "192.168.1.27";
+if(window.localStorage.getItem("IP") != null){
+    ip = window.localStorage.getItem("IP");
+}else{
+    ip = defaultIP;
+}
+//Setting up for dynamic ip selection
+$("#car_ip").val(ip);
+$("#car_ip").on("change",function(){
+    ip = $(this).val();
+    window.localStorage.setItem("IP",ip);
+});
+page_manager.addPageHandler(1,function(){
+    let backarrow = $("#templates .back_arrow").clone();
+    $(document.body).append(backarrow);
+    backarrow.on('click',function(){
+        page_manager.goToPage("main");
+    });
+},function(){
+    $(".back_arrow").last().remove();
+});
 $(window).on("gamepadconnected",function(){
     $("#bluetooth_status").text("Connected")
     $("#bluetooth_status").removeClass("not_connected");
     $("#bluetooth_status").addClass("connected");
-    page_manager.nextPage();
 });
 $(window).on("gamepaddisconnected",function(){
     $("#bluetooth_status").addClass("not_connected");
     $("#bluetooth_status").removeClass("connected");
     $("#bluetooth_status").text("Disconnected");
-    page_manager.goToPageNumber(0);
+});
+$("#settings_icon").on("click",function(){
+    page_manager.goToPage("settings")
 });
 $(document.body).on('gamepadButtonPress',function(e){
-    controller.rumble({controller: e.detail.controller});
+    //controller.rumble({controller: e.detail.controller});
     console.log("Controller " + e.detail.controller + ": " +  controller.button_conversion[e.detail.which] + " pressed");
 });
 $(document.body).on('gamepadButtonUp',function(e){
@@ -29,7 +54,6 @@ function handleAxesChange(gamepad){
     let leftTrigger = gamepad.axes[3];
     let leftStickX = gamepad.axes[0];
     let offset = ((leftTrigger+1)/2  + -1*(rightTrigger+1)/2);//Get the total forward/backward
-    console.log(offset);
     if(leftStickX>0){//Moved right
         set_wheel_speed({
             left_wheel: Math.floor(offset*255),
@@ -89,7 +113,7 @@ function removeClick(div){
     div.removeClass("clicked");
 }
 function get_wheel_speed(){
-    var path = "http://" + ip + "/control/movement"
+    var path = "http://" + defaultIP + "/control/movement"
     var wheel_get_settings = {
         url: path,
         method: "GET",
@@ -139,4 +163,24 @@ function set_accessory(json){
             console.log("Server having issues")
         }
     });
+}
+function setCookie(cname, cvalue) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 }

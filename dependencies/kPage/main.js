@@ -95,6 +95,16 @@ class PageManager{
                         currentPageReference.slidePageRight(this.animationSpeed);
                         requestedPage.slideInFromLeft(this.animationSpeed);
                     }
+                    if(this.pageExitListeners[lastPageNumber] !== undefined){//run action listeners associated with page
+                        for(var x = 0;x<this.pageExitListeners [lastPageNumber].length;x++){
+                            this.pageExitListeners [lastPageNumber][x].call();
+                        }
+                    }
+                    if(this.pageEntryListeners[requested_page_number] !== undefined){//run action listeners associated with page
+                        for(var x = 0;x<this.pageEntryListeners[requested_page_number].length;x++){
+                            this.pageEntryListeners[requested_page_number][x].call();
+                        }
+                    }
                     this.currentPageNumber = requestedPage.getNumber();
                     this.currentPage = requestedPage;
                     return this.currentPage;

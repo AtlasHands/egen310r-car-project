@@ -1,5 +1,5 @@
 class ds4_controller_adapter{
-    controller_tolerance = 0.05; //Define how much a float value should change before sending an event
+    controller_tolerance = 0.2; //Define how much a float value should change before sending an event
     constructor(options = {}){
         let reference = this;
         if(options.controller_tolerance){
@@ -31,21 +31,18 @@ class ds4_controller_adapter{
             }
             //Checking for button changes
             for(let key in gamepad[x].buttons){
+                var sendAxesEvent = false;
                 //Key 6 and 7 for ps4 is the leftstick x and y
                 if(key == 6 || key == 7){
                     var changedBy = Math.abs(reference.floats[key][x] - gamepad[x].buttons[key].value);
+                    if((gamepad[x].buttons[key].value == -1 && reference.floats[key][x] != -1)||(gamepad[x].buttons[key].value == 0 && reference.floats[key][x] != 0)||(gamepad[x].buttons[key].value == 0 && reference.floats[key][x] != 0)){
+                        sendAxesEvent = true
+                    }
                     //If the the change from the original is greater than than the set tolerance
                     if(changedBy > reference.controller_tolerance){
-                        //Trigger a gamepadAxesChange event
-                        var gamepadAxesChange = new CustomEvent('gamepadAxesChange',{'detail':{'controller':x,'which':key,'value':gamepad[x].buttons[key].value,'gamepad':gamepad[x]}});
-                        //Set our local values to the gamepad api value
-                        reference.floats[key][x] = gamepad[x].buttons[key].value;
-                        document.body.dispatchEvent(gamepadAxesChange);
+                        sendAxesEvent = true;
                     }
-                    continue;
-                }
-                //If the gamepad api key is pressed, and the local state is not
-                if(gamepad[x].buttons[key].pressed == true){
+                }else if(gamepad[x].buttons[key].pressed == true){//If the gamepad api key is pressed, and the local state is not
                     if(reference.keydown[key][x] == false){
                         //Trigger a gamepadButtonPress event
                         var gamepadButtonPressed = new CustomEvent('gamepadButtonPress',{'detail':{'controller':x,'which': key,'gamepad':gamepad[x]}});
@@ -54,8 +51,7 @@ class ds4_controller_adapter{
                         document.body.dispatchEvent(gamepadButtonPressed);
                         continue;
                     }
-                //If the gamepad api is not pressed, and the local state is
-                }else{
+                }else{//If the gamepad api is not pressed, and the local state is
                     if(reference.keydown[key][x] == true){
                         //Trigger a gamepadButtonUp event
                         var gamepadButtonUp = new CustomEvent('gamepadButtonUp',{'detail':{'controller':x,'which': key,'gamepad':gamepad[x]}});
@@ -65,14 +61,28 @@ class ds4_controller_adapter{
                         continue;
                     }
                 }
-                
+                if(sendAxesEvent){
+                    //Trigger a gamepadAxesChange event
+                    var gamepadAxesChange = new CustomEvent('gamepadAxesChange',{'detail':{'controller':x,'which':key,'value':gamepad[x].buttons[key].value,'gamepad':gamepad[x]}});
+                    //Set our local values to the gamepad api value
+                    reference.floats[key][x] = gamepad[x].buttons[key].value;
+                    document.body.dispatchEvent(gamepadAxesChange);
+                }
             }
             //TODO: add handling for when the axes is at an extreme (resting/full down) so when it is not a 0.05 difference it can still get to resting
             for(let key in gamepad[x].axes){
+                var sendEvent = false;
                 var changedBy = Math.abs(reference.floats[key][x] - gamepad[x].axes[key]);
+                //Long logic to decide whether or not to do an update (if its at
+                //an extreme)
+                if((gamepad[x].axes[key] == -1 && reference.floats[key][x] != -1)||(gamepad[x].axes[key] == 0 && reference.floats[key][x] != 0)||(gamepad[x].axes[key] == 0 && reference.floats[key][x] != 0)){
+                    sendEvent = true
+                }
                 //If the change from the local is greater than the set tolerance
-                if(changedBy > reference.controller_tolerance){
-                    //Trigger a gamepadAxesChange event
+                else if(changedBy > reference.controller_tolerance){
+                   sendEvent=true;
+                }
+                if(sendEvent){
                     var gamepadAxesChange = new CustomEvent('gamepadAxesChange',{'detail':{'controller':x,'which':key,'value':gamepad[x].axes[key],'gamepad':gamepad[x]}});
                     //Set the local values to the gamepad api value
                     reference.floats[key][x] = gamepad[x].axes[key];

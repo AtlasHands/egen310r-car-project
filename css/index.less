@@ -1,28 +1,84 @@
 body{
     background-color: white;
 }
+.page{
+    position: absolute;
+    top: 2.5rem;
+}
+#templates{
+    display:none;
+}
+.back_arrow{
+    position: absolute;
+    top: 0.7rem;
+    left: 1rem;
+    width: 2rem;
+    height: 2rem;
+    cursor:pointer;
+    border-radius: 25%;
+    transition: background-color .2s;
+}
+.back_arrow:hover{
+    background-color: gainsboro;
+}  
+#pages{
+    overflow:hidden;
+}
 .not_connected{
     color:red;
 }
 .connected{
     color: lightgreen;
 }
+#settings_page_content{
+    padding-left: .5rem;
+}
+#main_page_content{
+    padding-left: .5rem;
+}
+#settings_icon{
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 25%;
+    background-color: gainsboro;
+    cursor: pointer;
+    position: absolute;
+    top: 1rem;
+    right: 2vw;
+    #settings_icon_path{
+        fill: darkgoldenrod;
+    }
+}
+#status_bar{
+    display: flex;
+    position: fixed;
+    flex-direction: row;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    padding: .5rem 0;
+    height: 2rem;
+    background-color: #F8F8F8;
+    border-bottom: 1px solid gainsboro;
+    .status_bar_group{
+        display: flex;
+        margin-right: 2vw;
+    }
+}
 #bluetooth_status{
     padding:10px;
 }
-#connect_to_bluetooth{
-    background-color:lightskyblue;
+#bluetooth_status_description{
+    color:darkblue;
     border-radius: 5px;
-    padding: 10px;
-    cursor:pointer;
+    padding: 10px 0;
     user-select: none;
 }
 #bluetooth_div{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
-    height: 95vh;
 }
 #test_connection_div{
     display: flex;
@@ -32,14 +88,13 @@ body{
     height:95vh;
 }
 #test_connection{
-    background-color:royalblue;
+    color: darkorange;
     border-radius: 5px;
     padding: 10px;
-    cursor:pointer;
     user-select: none;
 }
 #test_connection_status{
-    padding: 10px;
+    padding: 10px 0;
 }
 #left-right{
     display: flex;

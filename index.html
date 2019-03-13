@@ -7,43 +7,59 @@
   <link rel="stylesheet" href="./css/index.css">
 </head>
 <body>
+    <div id="templates">
+        <svg class="back_arrow" xmlns="http://www.w3.org/2000/svg"
+        width="24" height="24" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83
+            13H21z"/>
+        </svg>
+    </div>
+    <div id="status_bar">
+        <div class="status_bar_group">
+            <div id="bluetooth_status_description">Controller:</div>
+            <div id="bluetooth_status" class="not_connected">Disconnected</div>
+        </div>
+        <div class="status_bar_group">
+            <div id="test_connection">Car:</div>
+            <div id="test_connection_status" class="not_connected">Disconnected</div>
+        </div>
+    </div>
     <div id="pages">
-        <div id="main_group" class="pageGroup">
-            <div id="bluetooth_connect_page" class="page">
-                <div id="bluetooth_div">
-                    <div id="connect_to_bluetooth">Connect to Bluetooth</div>
-                    <div id="bluetooth_status" class="not_connected">Disconnected</div>
-                </div>
-            </div> 
-            <div id="wifi_connect_page" class="page">
-                <div id="test_connection_div">
-                    <div id="test_connection">Test Connection to Car</div>
-                    <div id="test_connection_status">Not Connected</div>
+        <div class="pageGroup">
+            <div class="page" name="main">
+                <div id="main_page_content">
+                    <p>Testing a page quick</p>
+                    <svg id="settings_icon"xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path fill="none" d="M0 0h20v20H0V0z"/>
+                        <path id="settings_icon_path" d="M15.95
+                        10.78c.03-.25.05-.51.05-.78s-.02-.53-.06-.78l1.69-1.32c.15-.12.19-.34.1-.51l-1.6-2.77c-.1-.18-.31-.24-.49-.18l-1.99.8c-.42-.32-.86-.58-1.35-.78L12
+                        2.34c-.03-.2-.2-.34-.4-.34H8.4c-.2
+                        0-.36.14-.39.34l-.3
+                        2.12c-.49.2-.94.47-1.35.78l-1.99-.8c-.18-.07-.39
+                        0-.49.18l-1.6 2.77c-.1.18-.06.39.1.51l1.69
+                        1.32c-.04.25-.07.52-.07.78s.02.53.06.78L2.37
+                        12.1c-.15.12-.19.34-.1.51l1.6
+                        2.77c.1.18.31.24.49.18l1.99-.8c.42.32.86.58
+                        1.35.78l.3 2.12c.04.2.2.34.4.34h3.2c.2 0
+                        .37-.14.39-.34l.3-2.12c.49-.2.94-.47
+                        1.35-.78l1.99.8c.18.07.39 0
+                        .49-.18l1.6-2.77c.1-.18.06-.39-.1-.51l-1.67-1.32zM10
+                        13c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3
+                        3z"/>
+                    </svg>
                 </div>
             </div>
-            <div id="control_page" class="page">
-                <div id="control_div">
-                    <div id="dpad">
-                        <div id="forward" class="dpad_control">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>                        
-                        </div>
-                        <div id="left-right">
-                            <div id="left" class="dpad_control">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-                            </div>
-                            <div id="right" class="dpad_control">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
-                            </div>
-                        </div>
-                        <div id="back" class="dpad_control">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="#010101" d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/></svg>
-                        </div>
-                    </div>
+            <div id="settings_page" class="page" name="settings">
+                <div id="settings_page_content">
+                        <p>Welcome to the settings page.</p>
+                        <p>Car IP:</p>
+                        <input id="car_ip" type="text">
                 </div>
+                
             </div>
         </div>
     </div>
-    
     
 </body>
 <script src="./dependencies/jquery.js"></script>
