@@ -1,9 +1,20 @@
 body {
   background-color: white;
+  overflow: hidden;
 }
 .page {
   position: absolute;
-  top: 2.5rem;
+  top: 3rem;
+}
+.inline_data {
+  display: flex;
+}
+p {
+  padding: 0.6rem;
+  margin: 0;
+}
+input {
+  height: 2rem;
 }
 #templates {
   display: none;
@@ -30,6 +41,32 @@ body {
 .connected {
   color: lightgreen;
 }
+.keyboard_icon {
+  padding: 1rem;
+  border-radius: 20%;
+  background-color: gainsboro;
+  font-size: 2rem;
+  width: 2rem;
+  text-align: center;
+}
+#wasd {
+  margin-left: 1rem;
+  margin-top: 1rem;
+}
+#slider {
+  transform: rotate(270deg);
+  position: absolute;
+  top: 4rem;
+  overflow: hidden;
+  left: 22rem;
+}
+#w_key {
+  margin-left: 5rem;
+  margin-bottom: 0.6rem;
+}
+.keys div {
+  margin-right: 1rem;
+}
 #settings_page_content {
   padding-left: .5rem;
 }
@@ -43,7 +80,7 @@ body {
   background-color: gainsboro;
   cursor: pointer;
   position: absolute;
-  top: 1rem;
+  top: .5rem;
   right: 2vw;
 }
 #settings_icon #settings_icon_path {

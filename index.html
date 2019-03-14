@@ -29,7 +29,6 @@
         <div class="pageGroup">
             <div class="page" name="main">
                 <div id="main_page_content">
-                    <p>Testing a page quick</p>
                     <svg id="settings_icon"xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                         <path fill="none" d="M0 0h20v20H0V0z"/>
                         <path id="settings_icon_path" d="M15.95
@@ -48,13 +47,26 @@
                         13c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3
                         3z"/>
                     </svg>
+                    <div id="wasd">
+                        <div id="w_key" class="keyboard_icon">W</div>
+                        <div class="inline_data keys">
+                            <div id="a_key" class="keyboard_icon">A</div>
+                            <div id="s_key" class="keyboard_icon">S</div>
+                            <div id="d_key" class="keyboard_icon">D</div>
+                        </div>
+                    </div>
+                    <div id="slider">
+                        <input type="range" min="1" max="100" value="1">
+                    </div>
                 </div>
             </div>
             <div id="settings_page" class="page" name="settings">
                 <div id="settings_page_content">
                         <p>Welcome to the settings page.</p>
-                        <p>Car IP:</p>
-                        <input id="car_ip" type="text">
+                        <div class="inline_data">
+                            <p>Car IP:</p>
+                            <input id="car_ip" type="text">
+                        </div>
                 </div>
                 
             </div>
