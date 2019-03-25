@@ -55,20 +55,26 @@
                             <div id="d_key" class="keyboard_icon">D</div>
                         </div>
                     </div>
-                    <div id="slider">
-                        <input type="range" min="1" max="100" value="1">
+                    <div id="slider_div">
+                        <div id="slider_power_div">
+                            <div>Current Power: </div>
+                            <div id="slider_power">0</div>
+                        </div>
+                        <div id="slider">
+                            <input id="slider_inbetween" type="range" min="0" max="100" value="0">
+                            <input id="slider_input" type="range" min="0" max="100" value="0">
+                        </div>
                     </div>
                 </div>
             </div>
             <div id="settings_page" class="page" name="settings">
                 <div id="settings_page_content">
-                        <p>Welcome to the settings page.</p>
-                        <div class="inline_data">
-                            <p>Car IP:</p>
-                            <input id="car_ip" type="text">
-                        </div>
+                    <p>Welcome to the settings page.</p>
+                    <div class="inline_data">
+                        <p>Car IP:</p>
+                        <input id="car_ip" type="text">
+                    </div>
                 </div>
-                
             </div>
         </div>
     </div>

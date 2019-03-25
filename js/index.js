@@ -1,6 +1,12 @@
 if(navigator.getGamepads() == undefined){
     console.log("Browser not supported");
 }
+$("#slider_input").val(0);
+$("#slider_input").on("change",function(){
+    $("#slider_power").text($(this).val());
+    $("#slider_inbetween").val($(this).val());
+    $(this).css("opacity",1-$(this).val()/100);
+});
 var defaultIP = "127.0.0.1";
 var ip;
 var log = console.log
@@ -35,6 +41,42 @@ $(window).on("gamepaddisconnected",function(){
     $("#bluetooth_status").addClass("not_connected");
     $("#bluetooth_status").removeClass("connected");
     $("#bluetooth_status").text("Disconnected");
+});
+let keysDown = {
+
+}
+$(document.body).on('keydown',function(e){
+    if(e.which == 87){ //w pressed
+        $("#w_key").addClass("pressed");
+    }else if(e.which == 65){
+        $("#a_key").addClass("pressed");
+    }
+    else if(e.which == 83){
+        $("#s_key").addClass("pressed");
+    }else if(e.which == 68){
+        $("#d_key").addClass("pressed");
+    }else if(e.which == 38){
+        var slider = $("#slider_input");
+        slider.val(parseInt(slider.val())+10);
+        slider.trigger("change");
+    }else if(e.which == 40){
+        var slider = $("#slider_input")
+        slider.val(parseInt(slider.val())-10);
+        slider.trigger("change");
+    }
+});
+$(document.body).on('keyup',function(e){
+    console.log(e.which);
+    if(e.which == 87){ //w pressed
+        console.log("key up");
+        $("#w_key").removeClass("pressed");
+    }else if(e.which == 65){
+        $("#a_key").removeClass("pressed");
+    }else if(e.which == 83){
+        $("#s_key").removeClass("pressed");
+    }else if(e.which == 68){
+        $("#d_key").removeClass("pressed");
+    }
 });
 $("#settings_icon").on("click",function(){
     page_manager.goToPage("settings")
