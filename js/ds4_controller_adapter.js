@@ -23,6 +23,9 @@ class ds4_controller_adapter{
             //if its null then skip
             if(gamepad[x] == null || gamepad[x] == undefined){
                 continue;
+            }else{
+                var controller_found = new Event('gamepadconnected');
+                window.dispatchEvent(controller_found);
             }
             //If its not ps4 skip
             let vender = gamepad[x].id.substring(gamepad[x].id.length-5,gamepad[x].id.length-1);

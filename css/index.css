@@ -21,8 +21,8 @@ input {
 }
 .back_arrow {
   position: absolute;
-  top: 0.7rem;
-  left: 1rem;
+  top: 3.5rem;
+  right: 2vw;
   width: 2rem;
   height: 2rem;
   cursor: pointer;
@@ -39,7 +39,7 @@ input {
   color: red;
 }
 .connected {
-  color: lightgreen;
+  color: darkgreen;
 }
 .keyboard_icon {
   padding: 1rem;
@@ -64,7 +64,7 @@ input {
   margin-right: 1rem;
 }
 #settings_page_content {
-  paddin-left: .5rem;
+  padding-left: .5rem;
 }
 #main_page_content {
   padding-left: .5rem;
@@ -98,7 +98,9 @@ input {
 }
 #status_bar .status_bar_group {
   display: flex;
-  margin-right: 2vw;
+  margin-right: 1vw;
+  margin-left: 1vw;
+  width: 176px;
 }
 #bluetooth_status {
   padding: 10px;
@@ -109,17 +111,14 @@ input {
   padding: 10px 0;
   user-select: none;
 }
-#bluetooth_div {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+#battery_percentage {
+  color: darkgreen;
+  border-radius: 5px;
+  padding: 10px;
+  user-select: none;
 }
-#test_connection_div {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 95vh;
+#battery_percentage_value {
+  padding: 10px 0;
 }
 #test_connection {
   color: darkorange;

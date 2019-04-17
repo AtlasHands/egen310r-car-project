@@ -7,9 +7,12 @@ $("#slider_input").on("change",function(){
     $("#slider_inbetween").val($(this).val());
     $(this).css("opacity",1-$(this).val()/100);
 });
+var connection_status = $("#test_connection_status");
+var battery_percentage = $("#battery_percentage_value");
 var defaultIP = "127.0.0.1";
 var ip;
-var log = console.log
+var battery_max = 8.2;
+var battery_min = 6;
 var page_manager = new PageManager(500,$("#pages"))
 let controller = new ds4_controller_adapter();
 if(window.localStorage.getItem("IP") != null){
@@ -17,6 +20,44 @@ if(window.localStorage.getItem("IP") != null){
 }else{
     ip = defaultIP;
 }
+setInterval(function(){
+    var getStatusRequest = {
+        timeout: 3000,
+        method:"GET",
+        url: "http://" + ip + "/status"
+    }
+    $.ajax(getStatusRequest).always(function(data,status,xhr){
+        if(xhr.status == 200){           
+            if(connection_status.text()!= "Connected"){
+                connection_status.text("Connected");
+                connection_status.removeClass("not_connected");
+                connection_status.addClass("connected");
+            }
+            battery_percentage.removeClass("not_connected");
+            console.log(data);
+            console.log(data.voltage);
+            var percentage;
+            if(data.voltage > 8.2){
+                percentage = 100;
+            }else if(data.voltage <= 6){
+                percentage = 0;
+            }else{
+                percentage = parseInt(100-((battery_max - data.voltage)*45.45));
+            }
+            battery_percentage.text(percentage + "%");
+        }else if(status == "error" || status == "timeout"){
+            if(connection_status.text()!= "Disconnected"){
+                connection_status.text("Not Connected");
+                connection_status.addClass("not_connected");
+                connection_status.removeClass("connected");
+            }
+            if(battery_percentage.text()!= "Disconnected"){
+                battery_percentage.text("Disconnected");
+                battery_percentage.addClass("not_connected");
+            }
+        }
+    });
+},5000);
 //Setting up for dynamic ip selection
 $("#car_ip").val(ip);
 $("#car_ip").on("change",function(){
@@ -46,15 +87,36 @@ let keysDown = {
 
 }
 $(document.body).on('keydown',function(e){
+    var power = parseInt($("#slider_input").val())*.01;
+    if(keysDown[e.which]){
+        return;
+    }
+    keysDown[e.which] = "true";
     if(e.which == 87){ //w pressed
         $("#w_key").addClass("pressed");
+        set_wheel_speed({
+            left_wheel: Math.floor(power*90),
+            right_wheel: Math.floor(power*90)
+        });
     }else if(e.which == 65){
         $("#a_key").addClass("pressed");
+        set_wheel_speed({
+            left_wheel: Math.floor(-1*power*90),
+            right_wheel: Math.floor(1*power*90)
+        });
     }
     else if(e.which == 83){
         $("#s_key").addClass("pressed");
+        set_wheel_speed({
+            left_wheel: Math.floor(-1*power*90),
+            right_wheel: Math.floor(-1*power*90)
+        });
     }else if(e.which == 68){
         $("#d_key").addClass("pressed");
+        set_wheel_speed({
+            left_wheel: Math.floor(power*90),
+            right_wheel: Math.floor(-1*power*90)
+        });
     }else if(e.which == 38){
         var slider = $("#slider_input");
         slider.val(parseInt(slider.val())+10);
@@ -67,6 +129,30 @@ $(document.body).on('keydown',function(e){
 });
 $(document.body).on('keyup',function(e){
     console.log(e.which);
+    if(keysDown[e.which]){
+        delete keysDown[e.which];
+        if(e.which == 87){ //w pressed
+            set_wheel_speed({
+                left_wheel: 0,
+                right_wheel: 0
+            });
+        }else if(e.which == 65){
+            set_wheel_speed({
+                left_wheel: 0,
+                right_wheel: 0
+            });
+        }else if(e.which == 83){
+            set_wheel_speed({
+                left_wheel: 0,
+                right_wheel: 0
+            });
+        }else if(e.which == 68){
+            set_wheel_speed({
+                left_wheel: 0,
+                right_wheel: 0
+            });
+        }
+    }
     if(e.which == 87){ //w pressed
         console.log("key up");
         $("#w_key").removeClass("pressed");
@@ -77,6 +163,7 @@ $(document.body).on('keyup',function(e){
     }else if(e.which == 68){
         $("#d_key").removeClass("pressed");
     }
+    
 });
 $("#settings_icon").on("click",function(){
     page_manager.goToPage("settings")
@@ -84,9 +171,30 @@ $("#settings_icon").on("click",function(){
 $(document.body).on('gamepadButtonPress',function(e){
     //controller.rumble({controller: e.detail.controller});
     console.log("Controller " + e.detail.controller + ": " +  controller.button_conversion[e.detail.which] + " pressed");
+    if(controller.button_conversion[e.detail.which] == "dpadleft"){
+        set_wheel_speed({
+            left_wheel: -90,
+            right_wheel: 90
+        });
+    }else if(controller.button_conversion[e.detail.which] == "dpadright"){
+        set_wheel_speed({
+            left_wheel: 90,
+            right_wheel: -90
+        });
+    }
 });
 $(document.body).on('gamepadButtonUp',function(e){
-    console.log("Controller " + e.detail.controller + ": " + controller.button_conversion[e.detail.which] + " up");
+    if(controller.button_conversion[e.detail.which] == "dpadleft"){
+        set_wheel_speed({
+            left_wheel: 0,
+            right_wheel: 0
+        });
+    }else if(controller.button_conversion[e.detail.which] == "dpadright"){
+        set_wheel_speed({
+            left_wheel: 0,
+            right_wheel: 0
+        });
+    }
 });
 $(document.body).on('gamepadAxesChange',function(e){
     handleAxesChange(e.detail.gamepad);
@@ -98,18 +206,18 @@ function handleAxesChange(gamepad){
     let offset = ((leftTrigger+1)/2  + -1*(rightTrigger+1)/2);//Get the total forward/backward
     if(leftStickX>0){//Moved right
         set_wheel_speed({
-            left_wheel: Math.floor(offset*255),
-            right_wheel: Math.floor(-1*leftStickX*offset*255)//Right wheel moves backward, left wheel forward
+            left_wheel: Math.floor(-1*leftStickX*offset*90),
+            right_wheel: Math.floor(offset*90)//Right wheel moves backward, left wheel forward
         });
     }else if(leftStickX<0){//Moved left
         set_wheel_speed({
-            left_wheel: Math.floor(leftStickX*offset*255),//Left wheel moves backward, right wheel forward
-            right_wheel: Math.floor(offset*255)
+            left_wheel: Math.floor(offset*90),
+            right_wheel: Math.floor(leftStickX*offset*90)
         });
     }else{
         set_wheel_speed({
-            left_wheel: Math.floor(offset*255),//Left wheel moves backward, right wheel forward
-            right_wheel: Math.floor(offset*255)
+            left_wheel: Math.floor(offset*90),
+            right_wheel: Math.floor(offset*90)
         });
     }
 }
