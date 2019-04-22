@@ -1,42 +1,45 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>Car Application</title>
-  <link rel="stylesheet" href="./dependencies/normalize.css">
-  <link rel="stylesheet" href="./dependencies/kPage/main.css">
-  <link rel="stylesheet" href="./css/index.css">
+	<title>Car Application</title>
+	<link rel="stylesheet" href="./dependencies/normalize.css">
+	<link rel="stylesheet" href="./dependencies/kPage/main.css">
+	<link rel="stylesheet" href="./css/index.css">
 </head>
+
 <body>
-    <div id="templates">
-        <svg class="back_arrow" xmlns="http://www.w3.org/2000/svg"
-        width="24" height="24" viewBox="0 0 24 24">
-            <path d="M0 0h24v24H0z" fill="none"/>
-            <path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83
-            13H21z"/>
-        </svg>
-    </div>
-    <div id="status_bar">
-        <div class="status_bar_group">
-            <div id="bluetooth_status_description">Controller:</div>
-            <div id="bluetooth_status" class="not_connected">Disconnected</div>
-        </div>
-        <div class="status_bar_group">
-            <div id="test_connection">Car:</div>
-            <div id="test_connection_status" class="not_connected">Disconnected</div>
-        </div>
-        <div class="status_bar_group">
-            <div id="battery_percentage">Battery:</div>
-            <div id="battery_percentage_value" class="not_connected">Disconnected</div>
-        </div>
-    </div>
-    <div id="pages">
-        <div class="pageGroup">
-            <div class="page" name="main">
-                <div id="main_page_content">
-                    <svg id="settings_icon"xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                        <path fill="none" d="M0 0h20v20H0V0z"/>
-                        <path id="settings_icon_path" d="M15.95
-                        10.78c.03-.25.05-.51.05-.78s-.02-.53-.06-.78l1.69-1.32c.15-.12.19-.34.1-.51l-1.6-2.77c-.1-.18-.31-.24-.49-.18l-1.99.8c-.42-.32-.86-.58-1.35-.78L12
+	<div id="templates">
+		<svg class="back_arrow" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+			<path d="M0 0h24v24H0z" fill="none" />
+			<path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.8313H21z"/>
+		</svg>
+	</div>
+	<div id="status_bar">
+		<div class="status_bar_group">
+			<div id="bluetooth_status_description">Controller:</div>
+			<div id="bluetooth_status" class="not_connected">Disconnected</div>
+		</div>
+		<div class="status_bar_group">
+			<div id="test_connection">Car:</div>
+			<div id="test_connection_status" class="not_connected">Disconnected</div>
+		</div>
+		<div class="status_bar_group">
+			<div id="battery_percentage">Battery:</div>
+			<div id="battery_percentage_value" class="not_connected">Disconnected</div>
+		</div>
+	</div>
+	<div id="pages">
+		<div class="pageGroup">
+			<div class="page" name="main">
+				<div id="main_page_content">
+					<svg id="settings_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+						<path fill="none" d="M0 0h20v20H0V0z" />
+						<path id="settings_icon_path" d="M15.95
+						10.78c.03-.25.05-.51.05-.78s-.02-.53-.06-
+						.78l1.69-1.32c.15-.12.19-.34.1-.51l-1.6-2.77c
+						-.1-.18-.31-.24-.49-.18l-1.99.8c-.42-.32-.86-
+						.58-1.35-.78L12
                         2.34c-.03-.2-.2-.34-.4-.34H8.4c-.2
                         0-.36.14-.39.34l-.3
                         2.12c-.49.2-.94.47-1.35.78l-1.99-.8c-.18-.07-.39
@@ -49,40 +52,39 @@
                         1.35-.78l1.99.8c.18.07.39 0
                         .49-.18l1.6-2.77c.1-.18.06-.39-.1-.51l-1.67-1.32zM10
                         13c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3
-                        3z"/>
-                    </svg>
-                    <div id="wasd">
-                        <div id="w_key" class="keyboard_icon">W</div>
-                        <div class="inline_data keys">
-                            <div id="a_key" class="keyboard_icon">A</div>
-                            <div id="s_key" class="keyboard_icon">S</div>
-                            <div id="d_key" class="keyboard_icon">D</div>
-                        </div>
-                    </div>
-                    <div id="slider_div">
-                        <div id="slider_power_div">
-                            <div>Current Power: </div>
-                            <div id="slider_power">0</div>
-                        </div>
-                        <div id="slider">
-                            <input id="slider_inbetween" type="range" min="0" max="100" value="0">
-                            <input id="slider_input" type="range" min="0" max="100" value="0">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="settings_page" class="page" name="settings">
-                <div id="settings_page_content">
-                    <p>Welcome to the settings page.</p>
-                    <div class="inline_data">
-                        <p>Car IP:</p>
-                        <input id="car_ip" type="text">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
+                        3z" />
+					</svg>
+					<div id="wasd">
+						<div id="w_key" class="keyboard_icon">W</div>
+						<div class="inline_data keys">
+							<div id="a_key" class="keyboard_icon">A</div>
+							<div id="s_key" class="keyboard_icon">S</div>
+							<div id="d_key" class="keyboard_icon">D</div>
+						</div>
+					</div>
+					<div id="slider_div">
+						<div id="slider_power_div">
+							<div>Current Power: </div>
+							<div id="slider_power">0</div>
+						</div>
+						<div id="slider">
+							<input id="slider_inbetween" type="range" min="0" max="100" value="0">
+							<input id="slider_input" type="range" min="0" max="100" value="0">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="settings_page" class="page" name="settings">
+				<div id="settings_page_content">
+					<p>Welcome to the settings page.</p>
+					<div class="inline_data">
+						<p>Car IP:</p>
+						<input id="car_ip" type="text">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 <script src="./dependencies/jquery.js"></script>
 <script src="./dependencies/kPage/main.js"></script>
